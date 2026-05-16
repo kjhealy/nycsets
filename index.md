@@ -94,6 +94,41 @@ nyc_film_permit_zips_df
 #>  9   677684 10019   
 #> 10   677685 10019   
 #> # ℹ 26,057 more rows
+
+nyc_film_permit_parking_df
+#> # A tibble: 58,172 × 6
+#>    event_id segment_seq main_street    from_street to_street matched
+#>       <int>       <int> <chr>          <chr>       <chr>     <lgl>  
+#>  1   677665           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   
+#>  2   677666           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   
+#>  3   677670           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   
+#>  4   677675           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   
+#>  5   677679           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   
+#>  6   677681           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   
+#>  7   677682           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   
+#>  8   677683           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   
+#>  9   677684           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   
+#> 10   677685           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   
+#> # ℹ 58,162 more rows
+```
+
+`nyc_film_permit_parking_sf` is an `sf` MULTILINESTRING collection in
+EPSG:2263 with the same key columns plus LION attributes:
+
+``` r
+
+nyc_film_permit_parking_sf |>
+  sf::st_drop_geometry() |>
+  head(5)
+#> # A tibble: 5 × 10
+#>   event_id segment_seq main_street    segment_id physical_id lion_street  l_boro
+#>      <int>       <int> <chr>          <chr>            <int> <chr>         <int>
+#> 1   677665           1 WEST 58 STREET 0346568         198160 WEST 58 STR…      1
+#> 2   677665           1 WEST 58 STREET 0346569         198160 WEST 58 STR…      1
+#> 3   677665           1 WEST 58 STREET 0346571         198160 WEST 58 STR…      1
+#> 4   677665           1 WEST 58 STREET 0346572         198160 WEST 58 STR…      1
+#> 5   677666           1 WEST 58 STREET 0346568         198160 WEST 58 STR…      1
+#> # ℹ 3 more variables: r_boro <int>, l_zip <chr>, r_zip <chr>
 ```
 
 ## Examples
@@ -149,6 +184,33 @@ nyc_film_permits_df |>
 ![Line chart of daily NYC film permit counts from 2023 through early
 2026, showing weekly cycles and seasonal
 variation.](reference/figures/README-permits-by-day-1.png)
+
+A map of the streets held for parking on one busy permit day,
+2024-09-12:
+
+``` r
+
+day <- as.Date("2024-09-12")
+day_permits <- nyc_film_permits_df |>
+  filter(
+    as.Date(start_date_time, tz = "America/New_York") == day,
+    borough == "Manhattan"
+  )
+day_geo <- nyc_film_permit_parking_sf |>
+  filter(event_id %in% day_permits$event_id)
+ggplot(day_geo) +
+  geom_sf(colour = "firebrick", linewidth = 0.6, alpha = 0.6) +
+  coord_sf(crs = 2263) +
+  labs(
+    title = "Film-permit parking holds in Manhattan",
+    subtitle = format(day, "%B %e, %Y"),
+    caption = "Source: NYC MOME + NYC LION via NYC OpenData"
+  ) +
+  theme_void()
+```
+
+![Map of Manhattan street segments where parking was held under film
+permits on 2024-09-12.](reference/figures/README-parking-map-1.png)
 
 Top ten ZIP codes by permit count:
 

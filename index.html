@@ -134,13 +134,43 @@
 <span><span class="co">#&gt;  8   677683 10019   </span></span>
 <span><span class="co">#&gt;  9   677684 10019   </span></span>
 <span><span class="co">#&gt; 10   677685 10019   </span></span>
-<span><span class="co">#&gt; # ℹ 26,057 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; # ℹ 26,057 more rows</span></span>
+<span></span>
+<span><span class="va">nyc_film_permit_parking_df</span></span>
+<span><span class="co">#&gt; # A tibble: 58,172 × 6</span></span>
+<span><span class="co">#&gt;    event_id segment_seq main_street    from_street to_street matched</span></span>
+<span><span class="co">#&gt;       &lt;int&gt;       &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;       &lt;chr&gt;     &lt;lgl&gt;  </span></span>
+<span><span class="co">#&gt;  1   677665           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   </span></span>
+<span><span class="co">#&gt;  2   677666           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   </span></span>
+<span><span class="co">#&gt;  3   677670           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   </span></span>
+<span><span class="co">#&gt;  4   677675           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   </span></span>
+<span><span class="co">#&gt;  5   677679           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   </span></span>
+<span><span class="co">#&gt;  6   677681           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   </span></span>
+<span><span class="co">#&gt;  7   677682           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   </span></span>
+<span><span class="co">#&gt;  8   677683           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   </span></span>
+<span><span class="co">#&gt;  9   677684           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   </span></span>
+<span><span class="co">#&gt; 10   677685           1 WEST 58 STREET 10 AVENUE   11 AVENUE TRUE   </span></span>
+<span><span class="co">#&gt; # ℹ 58,162 more rows</span></span></code></pre></div>
+<p><code>nyc_film_permit_parking_sf</code> is an <code>sf</code> MULTILINESTRING collection in EPSG:2263 with the same key columns plus LION attributes:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nyc_film_permit_parking_sf</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_drop_geometry</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 5 × 10</span></span>
+<span><span class="co">#&gt;   event_id segment_seq main_street    segment_id physical_id lion_street  l_boro</span></span>
+<span><span class="co">#&gt;      &lt;int&gt;       &lt;int&gt; &lt;chr&gt;          &lt;chr&gt;            &lt;int&gt; &lt;chr&gt;         &lt;int&gt;</span></span>
+<span><span class="co">#&gt; 1   677665           1 WEST 58 STREET 0346568         198160 WEST 58 STR…      1</span></span>
+<span><span class="co">#&gt; 2   677665           1 WEST 58 STREET 0346569         198160 WEST 58 STR…      1</span></span>
+<span><span class="co">#&gt; 3   677665           1 WEST 58 STREET 0346571         198160 WEST 58 STR…      1</span></span>
+<span><span class="co">#&gt; 4   677665           1 WEST 58 STREET 0346572         198160 WEST 58 STR…      1</span></span>
+<span><span class="co">#&gt; 5   677666           1 WEST 58 STREET 0346568         198160 WEST 58 STR…      1</span></span>
+<span><span class="co">#&gt; # ℹ 3 more variables: r_boro &lt;int&gt;, l_zip &lt;chr&gt;, r_zip &lt;chr&gt;</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
 <p>Top production categories by borough:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nyc_film_permits_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">borough</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">count</span><span class="op">(</span><span class="va">borough</span>, <span class="va">category</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -163,7 +193,7 @@
 <span><span class="co">#&gt; 8 Student               6       26        49     18               0</span></span>
 <span><span class="co">#&gt; 9 Music Video           1       31        29      5               0</span></span></code></pre></div>
 <p>Permits per day over time:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nyc_film_permits_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">start_date_time</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">start_date_time</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -180,8 +210,28 @@
 <span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `geom_smooth()` using method = 'gam' and formula = 'y ~ s(x, bs = "cs")'</span></span></code></pre></div>
 <p><img src="reference/figures/README-permits-by-day-1.png" alt="Line chart of daily NYC film permit counts from 2023 through early 2026, showing weekly cycles and seasonal variation." width="100%"></p>
+<p>A map of the streets held for parking on one busy permit day, 2024-09-12:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">day</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">"2024-09-12"</span><span class="op">)</span></span>
+<span><span class="va">day_permits</span> <span class="op">&lt;-</span> <span class="va">nyc_film_permits_df</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="va">start_date_time</span>, tz <span class="op">=</span> <span class="st">"America/New_York"</span><span class="op">)</span> <span class="op">==</span> <span class="va">day</span>,</span>
+<span>    <span class="va">borough</span> <span class="op">==</span> <span class="st">"Manhattan"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">day_geo</span> <span class="op">&lt;-</span> <span class="va">nyc_film_permit_parking_sf</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">event_id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">day_permits</span><span class="op">$</span><span class="va">event_id</span><span class="op">)</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">day_geo</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_sf</span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"firebrick"</span>, linewidth <span class="op">=</span> <span class="fl">0.6</span>, alpha <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">coord_sf</span><span class="op">(</span>crs <span class="op">=</span> <span class="fl">2263</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Film-permit parking holds in Manhattan"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="va">day</span>, <span class="st">"%B %e, %Y"</span><span class="op">)</span>,</span>
+<span>    caption <span class="op">=</span> <span class="st">"Source: NYC MOME + NYC LION via NYC OpenData"</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_void</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-parking-map-1.png" alt="Map of Manhattan street segments where parking was held under film permits on 2024-09-12." width="100%"></p>
 <p>Top ten ZIP codes by permit count:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nyc_film_permit_zips_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">count</span><span class="op">(</span><span class="va">zip_code</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">slice_head</span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>

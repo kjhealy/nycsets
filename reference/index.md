@@ -18,3 +18,12 @@ One row per permit per affected administrative unit.
   : Film permits to police precincts (long)
 - [`nyc_film_permit_zips_df`](https://kjhealy.github.io/nycsets/reference/nyc_film_permit_zips_df.md)
   : Film permits to ZIP codes (long)
+
+## Geolocated parking-held stretches
+
+Parsed parking-held free-text matched to LION street segments.
+
+- [`nyc_film_permit_parking_df`](https://kjhealy.github.io/nycsets/reference/nyc_film_permit_parking_df.md)
+  : Film permits to parsed parking-held street stretches (long)
+- [`nyc_film_permit_parking_sf`](https://kjhealy.github.io/nycsets/reference/nyc_film_permit_parking_sf.md)
+  : Geolocated film-permit parking stretches
