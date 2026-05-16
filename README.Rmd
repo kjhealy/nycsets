@@ -50,6 +50,17 @@ nyc_film_permit_boards_df
 nyc_film_permit_precincts_df
 
 nyc_film_permit_zips_df
+
+nyc_film_permit_parking_df
+```
+
+`nyc_film_permit_parking_sf` is an `sf` MULTILINESTRING collection in
+EPSG:2263 with the same key columns plus LION attributes:
+
+```{r included-sf}
+nyc_film_permit_parking_sf |>
+  sf::st_drop_geometry() |>
+  head(5)
 ```
 
 ## Examples
@@ -85,6 +96,28 @@ nyc_film_permits_df |>
     caption = "Source: NYC MOME via NYC OpenData"
   ) +
   theme_minimal()
+```
+
+A map of the streets held for parking on one busy permit day, 2024-09-12:
+
+```{r parking-map, fig.alt = "Map of Manhattan street segments where parking was held under film permits on 2024-09-12."}
+day <- as.Date("2024-09-12")
+day_permits <- nyc_film_permits_df |>
+  filter(
+    as.Date(start_date_time, tz = "America/New_York") == day,
+    borough == "Manhattan"
+  )
+day_geo <- nyc_film_permit_parking_sf |>
+  filter(event_id %in% day_permits$event_id)
+ggplot(day_geo) +
+  geom_sf(colour = "firebrick", linewidth = 0.6, alpha = 0.6) +
+  coord_sf(crs = 2263) +
+  labs(
+    title = "Film-permit parking holds in Manhattan",
+    subtitle = format(day, "%B %e, %Y"),
+    caption = "Source: NYC MOME + NYC LION via NYC OpenData"
+  ) +
+  theme_void()
 ```
 
 Top ten ZIP codes by permit count:

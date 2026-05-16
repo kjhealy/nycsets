@@ -21,6 +21,11 @@ reference:
   - nyc_film_permit_boards_df
   - nyc_film_permit_precincts_df
   - nyc_film_permit_zips_df
+- title: Geolocated parking-held stretches
+  desc: Parsed parking-held free-text matched to LION street segments.
+  contents:
+  - nyc_film_permit_parking_df
+  - nyc_film_permit_parking_sf
 navbar:
   right:
   - icon: fa-github

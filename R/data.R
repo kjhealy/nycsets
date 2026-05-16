@@ -21,6 +21,94 @@
 #' @source <https://data.cityofnewyork.us/City-Government/Film-Permits/tg4x-b46p>
 "nyc_film_permit_boards_df"
 
+#' Film permits to parsed parking-held street stretches (long)
+#'
+#' Long-format companion table parsing the free-text `parking_held` column
+#' of [nyc_film_permits_df] into one row per
+#' `"MAIN STREET between FROM-STREET and TO-STREET"` stretch.
+#'
+#' @format ## `nyc_film_permit_parking_df`
+#' A tibble with 58,172 rows and 6 columns:
+#' \describe{
+#'   \item{event_id}{Integer. Permit identifier. Joins to
+#'     [nyc_film_permits_df]`$event_id`.}
+#'   \item{segment_seq}{Integer. Ordinal position of the stretch within the
+#'     original comma-separated `parking_held` string for this permit.
+#'     Together with `event_id`, uniquely identifies each parsed stretch.}
+#'   \item{main_street}{Character. The street whose parking is held.}
+#'   \item{from_street}{Character. Cross street naming one end of the
+#'     stretch.}
+#'   \item{to_street}{Character. Cross street naming the other end of the
+#'     stretch.}
+#'   \item{matched}{Logical. `TRUE` when geometry was successfully
+#'     resolved against LION; see [nyc_film_permit_parking_sf].}
+#' }
+#' @details
+#' Approximately 87% of parsed stretches successfully geolocate to one or
+#' more LION street segments. The unmatched 13% are mostly typos, renamed
+#' streets not in the alt-name table, multi-direction data-entry oddities
+#' such as "EAST AND WEST 44 STREET", and highway service-road / direction
+#' codes such as "CLEARVIEW EXPRESSWAY SR SB".
+#'
+#' Many parsed stretches span more than one block (e.g., "AMSTERDAM
+#' AVENUE between WEST 62 STREET and WEST 65 STREET"). Geolocation is
+#' performed by shortest path along a per-(main-street, borough) subgraph
+#' of LION, so one parsed stretch can produce multiple rows in the
+#' companion sf object.
+#'
+#' @author Kieran Healy
+#' @source <https://data.cityofnewyork.us/City-Government/Film-Permits/tg4x-b46p>
+"nyc_film_permit_parking_df"
+
+#' Geolocated film-permit parking stretches
+#'
+#' Spatial companion to [nyc_film_permit_parking_df] containing LION street
+#' segments matched to each parsed parking-held stretch. One row per
+#' `(event_id, segment_seq, segment_id)` triple; a single parsed stretch
+#' spanning multiple blocks produces several rows.
+#' EPSG:2263, NAD83 / New York Long Island (ftUS).
+#'
+#' @format ## `nyc_film_permit_parking_sf`
+#' A simple feature collection with 97,182 rows and 10 columns:
+#' \describe{
+#'   \item{event_id}{Integer. Permit identifier. Joins to
+#'     [nyc_film_permits_df]`$event_id`.}
+#'   \item{segment_seq}{Integer. Ordinal position of the parsed stretch
+#'     within the permit's `parking_held` string. Joins to
+#'     [nyc_film_permit_parking_df] on `(event_id, segment_seq)`.}
+#'   \item{main_street}{Character. The street whose parking is held, as
+#'     it appeared in the source text.}
+#'   \item{segment_id}{Character. LION seven-digit segment identifier.}
+#'   \item{physical_id}{Integer. LION physical-segment ID. Multiple
+#'     LION rows can share the same `physical_id`; group by this column
+#'     to recover one row per block face.}
+#'   \item{lion_street}{Character. The canonical LION street name for the
+#'     matched segment.}
+#'   \item{l_boro, r_boro}{Integer. LION borough code on the left /
+#'     right side of the segment: `1` Manhattan, `2` Bronx, `3` Brooklyn,
+#'     `4` Queens, `5` Staten Island.}
+#'   \item{l_zip, r_zip}{Character. ZIP code on the left / right side.}
+#'   \item{SHAPE}{Linestring / multilinestring geometry in EPSG:2263.}
+#' }
+#' @details
+#' Geometry is taken directly from [nyclion::nyc_lion_sf]. Matching uses a
+#' street-name normalizer (ordinal-word expansion, abbreviation
+#' expansion, compass-letter expansion) plus the LION alt-names table,
+#' then shortest-path search through a per-(main-street, borough)
+#' subgraph of LION segments. About 87% of parsed parking-held stretches
+#' resolve to at least one LION segment.
+#'
+#' LION subdivides each block-face into one or more sub-segments at
+#' minor nodes (driveways, internal breakpoints). To recover one row per
+#' block face, group or dissolve by `physical_id`.
+#'
+#' @author Kieran Healy
+#' @source
+#' <https://data.cityofnewyork.us/City-Government/Film-Permits/tg4x-b46p>
+#' and NYC Department of City Planning LION
+#' <https://www.nyc.gov/site/planning/data-maps/open-data.page>.
+"nyc_film_permit_parking_sf"
+
 #' Film permits to police precincts (long)
 #'
 #' Long-format companion table linking each film permit to the NYPD

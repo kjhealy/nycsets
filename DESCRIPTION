@@ -19,4 +19,6 @@ LazyDataCompression: xz
 URL: https://github.com/kjhealy/nycsets, https://kjhealy.github.io/nycsets/
 BugReports: https://github.com/kjhealy/nycsets/issues
 Suggests:
+    nyclion,
+    sf (>= 1.0.0),
     tibble (>= 3.0.0)
