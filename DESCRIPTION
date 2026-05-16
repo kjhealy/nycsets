@@ -1,0 +1,22 @@
+Package: nycsets
+Title: NYC Film Permits Data
+Version: 0.0.1.9000
+Authors@R:
+    person("Kieran", "Healy", , "kjhealy@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "https://orcid.org/0000-0001-9114-981X"))
+Description: Film, television, and other production permits issued by the
+    New York City Mayor's Office of Media and Entertainment (MOME). Includes
+    the main permits table and companion long tables linking permits to
+    community boards, police precincts, and ZIP codes.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 8.0.0
+Depends:
+    R (>= 3.5)
+LazyData: true
+LazyDataCompression: xz
+URL: https://github.com/kjhealy/nycsets
+BugReports: https://github.com/kjhealy/nycsets/issues
+Suggests:
+    tibble (>= 3.0.0)
