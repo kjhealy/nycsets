@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# nycsets
+# nycsets <img src="man/figures/nycsets.png" align="right" width="360">
 
 <!-- badges: start -->
 
