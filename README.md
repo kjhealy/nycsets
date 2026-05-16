@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/kjhealy/nycsets/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/kjhealy/nycsets/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 `nycsets` packages film, television, and other production permits issued

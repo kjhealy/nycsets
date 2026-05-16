@@ -1,32 +1,30 @@
 authors:
   Kieran Healy:
     href: http://kieranhealy.org
-
 url: https://kjhealy.github.io/nycsets/
 template:
   bootstrap: 5
   bslib:
-    base_font: {google: "IBM Plex Sans"}
-    heading_font: {google: "IBM Plex Sans"}
-    code_font: {google: "IBM Plex Mono"}
-
+    base_font:
+      google: IBM Plex Sans
+    heading_font:
+      google: IBM Plex Sans
+    code_font:
+      google: IBM Plex Mono
 reference:
-  - title: "Permits"
-    desc: Main permits table from the NYC Mayor's Office of Media and Entertainment.
-    contents:
-      - nyc_film_permits_df
-  - title: "Long companion tables"
-    desc: One row per permit per affected administrative unit.
-    contents:
-      - nyc_film_permit_boards_df
-      - nyc_film_permit_precincts_df
-      - nyc_film_permit_zips_df
-
+- title: Permits
+  desc: Main permits table from the NYC Mayor's Office of Media and Entertainment.
+  contents: nyc_film_permits_df
+- title: Long companion tables
+  desc: One row per permit per affected administrative unit.
+  contents:
+  - nyc_film_permit_boards_df
+  - nyc_film_permit_precincts_df
+  - nyc_film_permit_zips_df
 navbar:
   right:
-   - icon: fa-github
-     href: https://github.com/kjhealy/nycsets
-
+  - icon: fa-github
+    href: https://github.com/kjhealy/nycsets
 figures:
   dev: grDevices::png
   dpi: 300
@@ -36,3 +34,4 @@ figures:
   fig.height: ~
   fig.retina: 2
   fig.asp: 1.618
+

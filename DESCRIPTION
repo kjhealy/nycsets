@@ -16,7 +16,7 @@ Depends:
     R (>= 3.5)
 LazyData: true
 LazyDataCompression: xz
-URL: https://github.com/kjhealy/nycsets
+URL: https://github.com/kjhealy/nycsets, https://kjhealy.github.io/nycsets/
 BugReports: https://github.com/kjhealy/nycsets/issues
 Suggests:
     tibble (>= 3.0.0)
